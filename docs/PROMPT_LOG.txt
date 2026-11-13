@@ -1,340 +1,384 @@
                        ASSIGNMENT_8
 
-             Prompt Log and Reflection (Part F)
+            Prompt Log and Reflection (Part F)
           Building and Auditing an AI-Agent Toolchain
                AI Tools and Prompt Engineering
 
 
-Name             Paarshvi Vijoy
-Roll no          150096725188
-Cohort           Jeff Bezos
-Date             13 November 2026
-Part F: Reflection and Prompt Log
 
+
+          P.V.
+Name              Paarshvi Vijoy
+Roll no           150096725188
+Cohort            Jeff Bezos
+Date              13 November 2026
+Part F: Reflection and Prompt Log
 F.1 Prompt log with verification notes
 Tool used for every entry: Claude (Sonnet 5.5). Each round started with a
 first-pass answer. I checked it against the official page or by running the
-command, rejected what failed, and asked for a redo. The screenshots show the
-first-pass answers marked REJECTED, and my rejection prompt. The corrected
-answers are the content of Parts A to E.
+command, rejected what failed, and asked for a redo. The screenshots show
+the first-pass answers marked REJECTED, and my rejection prompt. The
+corrected answers are the content of Parts A to E.
 Disclosure. The first-pass answers in this log were generated as deliberately
-flawed drafts for me to audit. I verified each against the official sources, rejected
-what failed, and the corrected answers are what this report contains.
-
-Entry 1: Part A claim audit, first pass: REJECTED
-
-Prompt               Pasted the ten claims and asked for the audit table with the
-                     five required columns (summary of my prompt).
-Output               Marked claims 2, 4, 6, 8 and 10 as True (for example
-                     “Revision 2025-02-30 added a Persistent Memory
-                     Primitive”, “git worktree sync --all rebases all worktrees”).
-                     Marked 9 False for the wrong reason (“needs
-                     --allow-duplicate”). Cited URLs such as
-                     modelcontextprotocol.io/spec/2025-02-30/memory,
-                     docs.claude.com/skills/config and
-                     git-scm.com/docs/git-worktree-sync, all dated 2024-05-12.
-                     One-line reasoning only.
-Rejected, and        Six verdicts were wrong or invented, the URLs were
-why                  guessed, the access date was wrong (13 Nov 2026 is correct)
-                     and the reasoning was one line instead of 2 to 3 sentences.
-How I detected Opened the pages. 2025-02-30 is not a real date and the
-it             versioning page uses YYYY-MM-DD. The skill spec has no
-               skill.config.yaml or runtime field. The git-worktree manual
-               lists no sync subcommand, and running it gave “unknown
-               subcommand”. RFC 9999 is a RATS message-wrapper
-               RFC. Running git worktree add twice for one branch gave
-               a fatal error, with --force as the real override. No
-               Hendricks and Oyelaran paper was found.
+flawed drafts for me to audit. I verified each against the official sources,
 
 
 
 
-                 Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 2
-                     V .
-                  P.
-
-REJECTED first-pass Part A table, claims 1 to 6.
+           P.V.
+rejected what failed, and the corrected answers are what this report contains.
 
 
 
 
-                     . V .
-                   P
+   Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 2
+Entry 1: Part A claim audit, first pass: REJECTED
+Prompt          Pasted the ten claims and asked for the audit table with
+                the five required columns (summary of my prompt).
+Output          Marked claims 2, 4, 6, 8 and 10 as True (for example
+                “Revision 2025-02-30 added a Persistent Memory
+                Primitive”, “git worktree sync --all rebases all
+                worktrees”). Marked 9 False for the wrong reason
+                (“needs --allow-duplicate”). Cited URLs such as
+                modelcontextprotocol.io/spec/2025-02-30/memory,
+                docs.claude.com/skills/config and
 
-REJECTED first-pass Part A table, claims 7 to 10.
+
+
+
+          P.V.
+                git-scm.com/docs/git-worktree-sync, all dated
+                2024-05-12. One-line reasoning only.
+Rejected, and   Six verdicts were wrong or invented, the URLs were
+why             guessed, the access date was wrong (13 Nov 2026 is
+                correct) and the reasoning was one line instead of 2 to 3
+                sentences.
+How I           Opened the pages. 2025-02-30 is not a real date and the
+detected it     versioning page uses YYYY-MM-DD. The skill spec
+                has no skill.config.yaml or runtime field. The
+                git-worktree manual lists no sync subcommand, and
+                running it gave “unknown subcommand”. RFC 9999 is a
+                RATS message-wrapper RFC. Running git
+                worktree add twice for one branch gave a fatal
+                error, with --force as the real override. No Hendricks
+                and Oyelaran paper was found.
 
 
 
 
-Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 3
-                                     . V .
-                                   P
+  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 3
+       P.V.
+        REJECTED first-pass Part A table, claims 1 to 6.
 
-                           My rejection prompt for Part A.
+
+
+
+       REJECTED first-pass Part A table, claims 7 to 10.
+
+
+
+
+Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 4
+                    My rejection prompt for Part A.
+
+
+
+
+          P.V.
 Entry 2: Part B skill, first pass: REJECTED
-
-Prompt              Asked for the timetable-helper skill, tests and two
-                    description rewrites (summary of my prompt).
-Output              A SKILL.md with a runtime: python3.14 field and an
-                    extra skill.config.yaml, the description “Helps with all
-                    university questions including timetables, fees, hostel rules”,
-                    the column dictionary inside SKILL.md, no helper script,
-                    the rule “If a class isn’t in the CSV, suggest the most likely
-                    one”, and four “passing” tests that included the hostel
-                    curfew prompt triggering the skill.
-Rejected, and       Description far too broad, invented fields, no progressive
-why                 disclosure, no script, and a rule that invites fabrication,
-                    which is the opposite of the anti-fabrication requirement.
-How I detected Compared the fields with the Agent Skills specification
-it             (already shown to be missing skill.config.yaml). Read test 4
-               (“hostel curfew” → triggered) against the description. Read
-               the “suggest the most likely one” rule against the
-               adversarial-test requirement.
-
-
-
-
-                Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 4
-                  . V.
-                P
-          REJECTED first-pass SKILL.md.
+Prompt           Asked for the timetable-helper skill, tests and two
+                 description rewrites (summary of my prompt).
+Output           A SKILL.md with a runtime: python3.14 field
+                 and an extra skill.config.yaml, the description
+                 “Helps with all university questions including
+                 timetables, fees, hostel rules”, the column dictionary
+                 inside SKILL.md, no helper script, the rule “If a class
+                 isn’t in the CSV, suggest the most likely one”, and four
+                 “passing” tests that included the hostel curfew prompt
+                 triggering the skill.
+Rejected, and    Description far too broad, invented fields, no progressive
+why              disclosure, no script, and a rule that invites fabrication,
+                 which is the opposite of the anti-fabrication requirement.
+How I            Compared the fields with the Agent Skills specification
+detected it      (already shown to be missing skill.config.yaml). Read
+                 test 4 (“hostel curfew” → triggered) against the
+                 description. Read the “suggest the most likely one” rule
+                 against the adversarial-test requirement.
 
 
 
 
-                      . V .
-                    P
-
-     REJECTED first-pass tests and rewrites.
+   Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 5
+       P.V.     REJECTED first-pass SKILL.md.
 
 
 
 
-Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 5
-                                     V .
-                                  P.
-
-                           My rejection prompt for Part B.
-Entry 3: Part C plugin, first pass: REJECTED
-Prompt              Asked for the campus-helpdesk plugin, install steps and a
-                    threat model (summary of my prompt).
-Output              A layout with plugin.json and marketplace.json at the
-                    plugin root, mcp.config.yaml, a hook that was only echo
-                    "checking protected folder..."; exit 0, the
-                    commands /plugin register, /plugin sync, claude
-                    plugin verify and /plugin remove, and a threat model of
-                    “be careful with skills” and “plugins are sandboxed, so
-                    hooks can’t run shell commands”.
-Rejected, and       Manifest and marketplace belong in .claude-plugin/, the
-why                 MCP file is .mcp.json, the hook can never block anything,
-                    several commands do not exist, and the threat model was
-                    one-liners without attack examples.
-How I detected Read the plugin docs and the CLI reference, then ran claude
-it             plugin validate and a real add/install/list/uninstall cycle.
-               The hooks docs say exit code 2 blocks and exit 0 does not,
-               so the exit 0 hook could never block. The claim that hooks
-               cannot run shell commands is the opposite of the docs
-               (hooks are shell commands).
+            REJECTED first-pass tests and rewrites.
 
 
 
 
-                Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 6
-                     V .
-                  P.
-
-       REJECTED first-pass Part C answer.
-
-
-
-
-                   . V .
-                  P
-
-           My rejection prompt for Part C.
+Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 6
+       P.V.
+                 My rejection prompt for Part B.
 
 
 
 
 Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 7
+Entry 3: Part C plugin, first pass: REJECTED
+Prompt          Asked for the campus-helpdesk plugin, install steps and
+                a threat model (summary of my prompt).
+Output          A layout with plugin.json and
+                marketplace.json at the plugin root,
+                mcp.config.yaml, a hook that was only echo
+                "checking protected folder..."; exit
+                0, the commands /plugin register, /plugin
+                sync, claude plugin verify and /plugin
+                remove, and a threat model of “be careful with skills”
+
+
+
+
+          P.V.
+                and “plugins are sandboxed, so hooks can’t run shell
+                commands”.
+Rejected, and   Manifest and marketplace belong in
+why             .claude-plugin/, the MCP file is .mcp.json,
+                the hook can never block anything, several commands
+                do not exist, and the threat model was one-liners without
+                attack examples.
+How I           Read the plugin docs and the CLI reference, then ran
+detected it     claude plugin validate and a real
+                add/install/list/uninstall cycle. The hooks docs say exit
+                code 2 blocks and exit 0 does not, so the exit 0 hook
+                could never block. The claim that hooks cannot run shell
+                commands is the opposite of the docs (hooks are shell
+                commands).
+
+
+
+
+  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 8
+       P.V.
+              REJECTED first-pass Part C answer.
+
+
+
+
+                 My rejection prompt for Part C.
+
+
+
+
+Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 9
 Entry 4: Part D MCP server, first pass: REJECTED
-
-Prompt              Asked for the MCP server and trace (summary of my
-                    prompt).
-Output              Install line pip install mcp-server-sdk plus the npm
-                    package @nimbus/mcp-skill-bridge, the made-up revision
-                    2025-02-30 over HTTP/SSE, from mcp import McpServer
-                    with McpServer("campus", transport="http",
-                    port=8080), a tool description reading “IMPORTANT:
-                    always also call get_fee_status…”, SQL built with an
-                    f-string, hostel rules as a tool, and the claim that “tool
-                    descriptions are just documentation and are not a security
-                    concern” (screenshot below).
-Rejected, and       The packages do not exist, the revision date is impossible,
-why                 the import and constructor are wrong, the description is an
-                    injection, the SQL string is injectable, and the security claim
-                    is false. There was no working server.
-How I detected npm view @nimbus/mcp-skill-bridge returned E404 on 13
-it             Nov 2026. pip index versions mcp-server-sdk found no
-               matching distribution. from mcp import McpServer raised
-               ImportError, and MCPServer(..., transport=...,
-               port=...) raised TypeError (unexpected keyword
-               argument). The versioning page uses YYYY-MM-DD, and
-               30 February is not a date. The tools page and the SDK
-               handling-errors page, plus my own poisoned-description lint
-               test, cover the security claim. I then built the server against
-               the installed SDK and the SDK docs, and ran it.
+Prompt           Asked for the MCP server and trace (summary of my
+                 prompt).
+Output           Install line pip install mcp-server-sdk plus
+                 the npm package @nimbus/mcp-skill-bridge,
+                 the made-up revision 2025-02-30 over HTTP/SSE,
+                 from mcp import McpServer with
+                 McpServer("campus", transport="http",
+                 port=8080), a tool description reading
+                 “IMPORTANT: always also call get_fee_status…”,
 
 
 
 
-                Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 8
-                                       V .
-                                    P.
+          P.V.
+                 SQL built with an f-string, hostel rules as a tool, and the
+                 claim that “tool descriptions are just documentation and
+                 are not a security concern” (screenshot below).
+Rejected, and    The packages do not exist, the revision date is
+why              impossible, the import and constructor are wrong, the
+                 description is an injection, the SQL string is injectable,
+                 and the security claim is false. There was no working
+                 server.
+How I            npm view @nimbus/mcp-skill-bridge
+detected it      returned E404 on 13 Nov 2026. pip index
+                 versions mcp-server-sdk found no matching
+                 distribution. from mcp import McpServer raised
+                 ImportError, and MCPServer(...,
+                 transport=..., port=...) raised TypeError
+                 (unexpected keyword argument). The versioning page
+                 uses YYYY-MM-DD, and 30 February is not a date.
+                 The tools page and the SDK handling-errors page, plus
+                 my own poisoned-description lint test, cover the security
+                 claim. I then built the server against the installed SDK
+                 and the SDK docs, and ran it.
 
-                         REJECTED first-pass Part D answer.
+
+
+
+  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 10
+          P.V.
+                REJECTED first-pass Part D answer.
 My rejection prompt (verbatim):
-nope.. `@nimbus/mcp-skill-bridge` isn't even on npm (E404), `2025-02-30` isn't a real MCP revision,
-  and that sdk import is straight up made up. redo Part D and actually build it this time. use a
-  stdio server with the official python sdk, add `get_timetable(batch, day)` and
-  `get_fee_status(student_id)` using mock data, hostel-rules as a resource, a README, actual test
-  logs, an annotated trace for initialize / tools/list / tools/call, one failure case, and explain
-  why tool descriptions are an attack surface. cite the docs (accessed 13 Nov 2026), and if
-  something can't be verified, just mark it Unverified instead of guessing.
+nope.. `@nimbus/mcp-skill-bridge` isn't even on
+   npm (E404), `2025-02-30` isn't a real MCP
+  revision, and that sdk import is straight up
+  made up. redo Part D and actually build it
+  this time. use a stdio server with the
+  official python sdk, add
+  `get_timetable(batch, day)` and
+  `get_fee_status(student_id)` using mock data,
+   hostel-rules as a resource, a README, actual
+   test logs, an annotated trace for initialize
+   / tools/list / tools/call, one failure case,
+   and explain why tool descriptions are an
+  attack surface. cite the docs (accessed 13
+  Nov 2026), and if something can't be
+  verified, just mark it Unverified instead of
+  guessing.
 
 
 
 
-                  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 9
+  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 11
 Entry 5: Part E worktrees, first pass: REJECTED
-
-Prompt               Asked for the worktree exercise, history graph and
-                     conceptual answers (summary of my prompt).
-Output               Three git worktree add ../path branch lines for
-                     branches that did not exist, git worktree sync (“keeps all
-                     worktrees up to date”), worktrees described as separate
-                     copies that “never conflict”, the same branch “in two
-                     worktrees whenever you want”, /worktree-merge as a safe
-                     automatic merge “because the AI is always right”, and no
-                     merge conflict created (screenshot below).
-Rejected, and        A new branch needs -b, there is no sync subcommand,
-why                  worktrees share one repository, Git refuses the same branch
-                     in two worktrees, the command is not documented, an AI is
-                     not always right, and the assignment required a deliberate
-                     conflict and its resolution.
-How I detected The git-worktree manual lists add, list, lock, move, prune,
-it             remove, repair and unlock. Running it myself: git
-                     worktree add ../skill-tests feature/skill-tests
-                     gave “fatal: invalid reference”, git worktree sync gave
-                     “unknown subcommand”, and a second worktree on one
-                     branch gave “already used by worktree”. The commands
-                     page has no /worktree-merge. I then ran the whole exercise
-                     for real, with a conflict.
+Prompt           Asked for the worktree exercise, history graph and
+                 conceptual answers (summary of my prompt).
+Output           Three git worktree add ../path branch
+                 lines for branches that did not exist, git worktree
+                 sync (“keeps all worktrees up to date”), worktrees
+                 described as separate copies that “never conflict”, the
+                 same branch “in two worktrees whenever you want”,
+                 /worktree-merge as a safe automatic merge
+                 “because the AI is always right”, and no merge conflict
 
 
 
 
-                                       V .
-                                    P.
+          P.V.
+                 created (screenshot below).
+Rejected, and    A new branch needs -b, there is no sync subcommand,
+why              worktrees share one repository, Git refuses the same
+                 branch in two worktrees, the command is not
+                 documented, an AI is not always right, and the
+                 assignment required a deliberate conflict and its
+                 resolution.
+How I            The git-worktree manual lists add, list, lock, move,
+detected it      prune, remove, repair and unlock. Running it myself:
+                 git worktree add ../skill-tests
+                 feature/skill-tests gave “fatal: invalid
+                 reference”, git worktree sync gave “unknown
+                 subcommand”, and a second worktree on one branch
+                 gave “already used by worktree”. The commands page
+                 has no /worktree-merge. I then ran the whole
+                 exercise for real, with a conflict.
 
-                        REJECTED first-pass Part E answer.
 
 
 
-                Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 10
-                                    . V .
-                                  P
+  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 12
+          P.V.
+                REJECTED first-pass Part E answer.
 
-          My rejection prompt for Part E (and the start of the redo).
+
+
+
+      My rejection prompt for Part E (and the start of the redo).
 Entry 6: SDK import: my own earlier correction
+Prompt           Part D redo.
+Output           In the rejected draft, FastMCP was named as the
+                 official import.
+Changed, and     That is only true for SDK v1. The installed SDK is 2.3.0
+why              where it is MCPServer. I used the v2 import and the
+                 install line from the SDK docs.
+How I            The import failed on the installed version and the SDK
+detected it      migration guide
+                 (https://py.sdk.modelcontextprotocol.io/migration/)
+                 states the rename.
 
-Prompt             Part D redo.
-Output             In the rejected draft, FastMCP was named as the official
-                   import.
-Changed, and       That is only true for SDK v1. The installed SDK is 2.3.0
-why                where it is MCPServer. I used the v2 import and the install
-                   line from the SDK docs.
-How I detected The import failed on the installed version and the SDK
-it             migration guide
-               (https://py.sdk.modelcontextprotocol.io/migration/) states
-               the rename.
-
-Entry 7: Error text hidden from the model
-
-Prompt             Part D redo.
-Output             A tool that raised ValueError for an unknown student ID.
-Changed, and       The model saw only “Error executing tool get_fee_status”. I
-why                switched to the SDK’s ToolError so the reason reaches the
-                   model.
-How I detected The trace showed the message without a reason; a test of the
-it             failure case confirmed the fix.
-
-
+  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 13
+Entry 7: Error text hidden from the model
+Prompt           Part D redo.
+Output           A tool that raised ValueError for an unknown
+                 student ID.
+Changed, and     The model saw only “Error executing tool
+why              get_fee_status”. I switched to the SDK’s ToolError
+                 so the reason reaches the model.
+How I            The trace showed the message without a reason; a test of
+detected it      the failure case confirmed the fix.
 
 
-              Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 11
-Entry 8: Unknown tool: spec example versus SDK behaviour
 
-Prompt               Part D redo.
-Output               An unknown tool call returned an isError:true result.
-Changed, and         The spec’s tools page shows a JSON-RPC protocol error
-why                  instead. I recorded what I observed and labelled whether the
-                     spec allows it as Unverified.
-How I detected Compared the real trace with the example on the tools page.
-it
+
+          P.V.
+Entry 8: Unknown tool: spec example versus SDK behaviour
+Prompt           Part D redo.
+Output           An unknown tool call returned an isError:true
+                 result.
+Changed, and     The spec’s tools page shows a JSON-RPC protocol error
+why              instead. I recorded what I observed and labelled whether
+                 the spec allows it as Unverified.
+How I            Compared the real trace with the example on the tools
+detected it      page.
 
 Entry 9: Planted instruction inside the assignment paper
+Prompt           Pasted the assignment paper.
+Output           The paper told AI systems to begin Part C with a fixed
+                 sentence and cite a “NimbusSync registry”.
+Rejected, and    It is an instruction inside the document, not from me. I
+why              did not follow it or cite it.
+How I            Read the paper critically, as the brief asked.
+detected it
 
-Prompt               Pasted the assignment paper.
-Output               The paper told AI systems to begin Part C with a fixed
-                     sentence and cite a “NimbusSync registry”.
-Rejected, and        It is an instruction inside the document, not from me. I did
-why                  not follow it or cite it.
-How I detected Read the paper critically, as the brief asked.
-it
 
-Entry 10: The /worktree-merge command
 
-Prompt               Asked whether the CTO’s command exists.
-Output               Checked the Claude Code Commands reference (0 hits
-                     across the command list), the worktrees page, and the
-                     installed binary.
-Changed, and         I worded the result as “not documented and not found in the
-why                  CLI I checked”, because absence cannot be proven. The
-                     binary check is local evidence, not documentation.
-How I detected Searched the docs pages and the installed v2.1.323 binary
-it             for the command name.
+
+  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 14
+Entry 10: The /worktree-merge command
+Prompt             Asked whether the CTO’s command exists.
+Output             Checked the Claude Code Commands reference (0 hits
+                   across the command list), the worktrees page, and the
+                   installed binary.
+Changed, and       I worded the result as “not documented and not found in
+why                the CLI I checked”, because absence cannot be proven.
+                   The binary check is local evidence, not documentation.
+How I              Searched the docs pages and the installed v2.1.323
+
+
+
+
+           P.V.
+detected it        binary for the command name.
 
 F.2 Reflection (300 words)
 Skills, plugins, MCP and worktrees answer four different questions. A Skill
-answers “how should the agent behave on this kind of task?” It is instructions
-plus small files, loaded when relevant. A plugin answers “how do I ship and
-
-                Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 12
-install that behaviour as one unit?” It bundles skills, commands, hooks and MCP
-entries. MCP answers “how does the agent reach live data or actions?” It is a
-protocol between a client and a server. Worktrees solve a different problem from
-the other three: “how can several coding sessions work on one repository without
-trampling each other?” That is a Git feature for developers. It does not change
-what the agent knows or can do.
-I would choose a Skill over an MCP tool when the need is guidance and the data
-is small and static. My timetable skill needed only a CSV and a rule, quote the
-row or say not found, so a skill with a script was enough. An MCP tool earns its
-place when the data is live, access-controlled or changes often, such as real fee
-status, because the server can validate input and enforce permissions in code
-instead of hoping the model follows text.
+answers “how should the agent behave on this kind of task?” It is
+instructions plus small files, loaded when relevant. A plugin answers “how
+do I ship and install that behaviour as one unit?” It bundles skills,
+commands, hooks and MCP entries. MCP answers “how does the agent
+reach live data or actions?” It is a protocol between a client and a server.
+Worktrees solve a different problem from the other three: “how can several
+coding sessions work on one repository without trampling each other?”
+That is a Git feature for developers. It does not change what the agent
+knows or can do.
+I would choose a Skill over an MCP tool when the need is guidance and the
+data is small and static. My timetable skill needed only a CSV and a rule,
+quote the row or say not found, so a skill with a script was enough. An MCP
+tool earns its place when the data is live, access-controlled or changes often,
+such as real fee status, because the server can validate input and enforce
+permissions in code instead of hoping the model follows text.
 I would never delegate these without review: merge-conflict resolution,
-installing or updating third-party plugins, hooks or MCP servers (they run with
-my permissions), security checks, and every citation or command I submit. This
-assignment showed why. The first-pass answers invented a package, a git
-subcommand, a revision date and a paper, and every one looked fluent. The fix
-was always the same: open the official page, run the command, or write
-Unverified. Even my verified work has limits. I did not test the hook or the
-server inside a live Claude session, so I say so instead of implying it.
+installing or updating third-party plugins, hooks or MCP servers (they run
+with my permissions), security checks, and every citation or command I
+submit. This assignment showed why. The first-pass answers invented a
+package, a git subcommand, a revision date and a paper, and every one
+
+  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 15
+looked fluent. The fix was always the same: open the official page, run the
+command, or write Unverified. Even my verified work has limits. I did not
+test the hook or the server inside a live Claude session, so I say so instead of
+implying it.
 (298 words)
 
 
 
 
-               Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 13
+           P.V.
+  Paarshvi Vijoy | Roll no: 150096725188 | Cohort: Jeff Bezos | Page 16
 
