@@ -224,9 +224,10 @@ Output             In the rejected draft, FastMCP was named as the official
 Changed, and       That is only true for SDK v1. The installed SDK is 2.3.0
 why                where it is MCPServer. I used the v2 import and the install
                    line from the SDK docs.
-How I detected The import failed on the installed version and the SDK docs
-it             (https://py.sdk.modelcontextprotocol.io/) showed the
-               rename.
+How I detected The import failed on the installed version and the SDK
+it             migration guide
+               (https://py.sdk.modelcontextprotocol.io/migration/) states
+               the rename.
 
 Entry 7: Error text hidden from the model
 
