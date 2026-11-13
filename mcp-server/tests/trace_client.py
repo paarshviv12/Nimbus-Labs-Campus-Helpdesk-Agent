@@ -67,7 +67,7 @@ def main():
     s.send({"jsonrpc": "2.0", "id": 6, "method": "resources/list"})
     s.send({"jsonrpc": "2.0", "id": 7, "method": "resources/read", "params": {"uri": "hostel://rules"}})
     s.close()
-    # Session 2: what happens with a made-up version like the slop's "2025-02-30"?
+    # Session 2: what happens with a made-up version like the invalid date "2025-02-30"?
     s2 = Rpc("badversion")
     s2.send({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {
         "protocolVersion": "2025-02-30", "capabilities": {},

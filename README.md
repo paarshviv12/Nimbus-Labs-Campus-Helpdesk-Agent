@@ -10,9 +10,9 @@ Mock data only. Contents:
 | `campus-helpdesk/` | Part C plugin: skill copy, `/timetable` command, write-guard hook, `.mcp.json` |
 | `.claude-plugin/marketplace.json` | Part C marketplace entry |
 | `THREAT_MODEL.md` | Part C threat model |
-| `mcp-server/` | Part D stdio MCP server (official Python SDK), tests, annotated trace |
+| `mcp-server/` | Part D stdio MCP server (official Python SDK), tests, annotated trace, MCP Inspector log |
 | `logs/` | Real command output for Parts B to E |
-| `docs/` | The PDF report and the prompt log |
+| `docs/` | The PDF report, the prompt log (PDF, plus `PROMPT_LOG.txt` as plain text) |
 
 Branches (Part E): `main`, `bugfix/hook-path`, `feature/mcp-server`, `feature/skill-tests`.
 
@@ -32,4 +32,16 @@ python3 -m pytest -v mcp-server/tests   # 10 tests
 ```
 
 Plugin steps (validate, add marketplace, install, list, uninstall) are in the report, Part C.3.
-In `campus-helpdesk/.mcp.json` the server path is a placeholder; see `mcp-server/README.md` for the one-line swap.
+
+`campus-helpdesk/.mcp.json` starts the server bundled inside the plugin (`${CLAUDE_PLUGIN_ROOT}/mcp-server/server.py`).
+That bundled copy must stay identical to the top-level `mcp-server/`; `campus-helpdesk/scripts/test_copies_in_sync.py` checks it.
+
+Official MCP Inspector (CLI mode) against the server, from `mcp-server/`:
+
+```bash
+npx -y @modelcontextprotocol/inspector --cli python3 server.py --method tools/list
+```
+
+Its output for tools, the failure case and the resource is saved in `logs/partD_inspector.txt`.
+
+Not verified here: the skill triggers, the hook, and the plugin's MCP server inside a live Claude session (the sandbox had no sign-in). The report marks each of these Unverified.

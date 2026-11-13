@@ -6,7 +6,7 @@
     {
       "name": "campus-helpdesk",
       "source": "./campus-helpdesk",
-      "description": "Timetable skill, /timetable command, protected-folder write guard hook, and a placeholder MCP entry."
+      "description": "Timetable skill, /timetable command, protected-folder write guard hook, and an MCP entry for the bundled server."
     }
   ]
 }

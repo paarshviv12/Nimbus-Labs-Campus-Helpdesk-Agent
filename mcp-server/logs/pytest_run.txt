@@ -1,7 +1,7 @@
 ============================= test session starts ==============================
 platform linux -- Python 3.13.18, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3
 cachedir: .pytest_cache
-rootdir: /home/claude/nimbus-campus-helpdesk/mcp-server
+rootdir: <repo>/mcp-server
 plugins: platformdirs-4.13.3, anyio-4.15.1
 collecting ... collected 10 items
 
@@ -16,4 +16,4 @@ tests/test_server.py::test_tool_descriptions_are_clean PASSED            [ 80%]
 tests/test_server.py::test_stdout_is_pure_jsonrpc PASSED                 [ 90%]
 tests/test_server.py::test_lint_catches_poisoned_description PASSED      [100%]
 
-============================== 10 passed in 1.40s ==============================
+============================== 10 passed in 1.43s ==============================

@@ -28,11 +28,22 @@ Logs from my run are in `logs/` (`pytest_run.txt`, `trace_run.txt`, `trace.jsonl
 
 ## Wire it into the plugin
 
-In `campus-helpdesk/.mcp.json`, replace the placeholder path (same file shape as in Part C):
+`campus-helpdesk/.mcp.json` starts a bundled copy of this server through the plugin root variable:
 
 ```json
-{ "mcpServers": { "campus-helpdesk-mcp": { "command": "python3", "args": ["/absolute/path/to/mcp-server/server.py"] } } }
+{ "mcpServers": { "campus-helpdesk-mcp": { "command": "python3", "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-server/server.py"] } } }
 ```
+
+The bundled copy (`campus-helpdesk/mcp-server/`) must match this folder; `campus-helpdesk/scripts/test_copies_in_sync.py` fails if they drift. The server needs `pip install "mcp>=2,<3"` on the machine.
+
+## Check with the official MCP Inspector
+
+```bash
+npx -y @modelcontextprotocol/inspector --cli python3 server.py --method tools/list
+npx -y @modelcontextprotocol/inspector --cli python3 server.py --method tools/call --tool-name get_fee_status --tool-arg student_id=S9999
+```
+
+Output is in `../logs/partD_inspector.txt` (the S9999 call is the failure case and returns `isError: true`).
 
 ## Design rules
 

@@ -1,0 +1,71 @@
+# Official MCP Inspector (CLI mode), 2026-11-13 UTC, node v22.23.4
+# Docs: https://modelcontextprotocol.io/docs/tools/inspector
+
+$ npx -y @modelcontextprotocol/inspector --cli python3 server.py --method tools/call --tool-name get_timetable --tool-arg batch=B1 --tool-arg day=Wed
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "batch,day,start_time,end_time,subject,room,faculty\nB1,Wed,10:15,11:15,DBMS,R-302,Dr. Rao\nB1,Wed,11:30,12:30,Computer Networks,R-301,Prof. Desai"
+    }
+  ],
+  "structuredContent": {
+    "result": "batch,day,start_time,end_time,subject,room,faculty\nB1,Wed,10:15,11:15,DBMS,R-302,Dr. Rao\nB1,Wed,11:30,12:30,Computer Networks,R-301,Prof. Desai"
+  },
+  "isError": false
+}
+(exit 0)
+
+$ npx -y @modelcontextprotocol/inspector --cli python3 server.py --method tools/call --tool-name get_fee_status --tool-arg student_id=S1001
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"student_id\": \"S1001\", \"name\": \"Mock Student One\", \"total_due\": 85000, \"paid\": 85000, \"status\": \"PAID\"}"
+    }
+  ],
+  "structuredContent": {
+    "result": "{\"student_id\": \"S1001\", \"name\": \"Mock Student One\", \"total_due\": 85000, \"paid\": 85000, \"status\": \"PAID\"}"
+  },
+  "isError": false
+}
+(exit 0)
+
+$ npx -y @modelcontextprotocol/inspector --cli python3 server.py --method tools/call --tool-name get_fee_status --tool-arg student_id=S9999   (failure case)
+Tool 'get_fee_status' failed: 'Error executing tool get_fee_status: No fee record for student_id S9999.'
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Error executing tool get_fee_status: No fee record for student_id S9999."
+    }
+  ],
+  "isError": true
+}
+{"error":{"code":"tool_is_error","message":"Tool 'get_fee_status' returned isError:true."}}
+(exit 5)
+
+$ npx -y @modelcontextprotocol/inspector --cli python3 server.py --method resources/list
+{
+  "resources": [
+    {
+      "name": "hostel-rules",
+      "uri": "hostel://rules",
+      "description": "Hostel rules (mock data).",
+      "mimeType": "text/markdown"
+    }
+  ]
+}
+(exit 0)
+
+$ npx -y @modelcontextprotocol/inspector --cli python3 server.py --method resources/read --uri hostel://rules
+{
+  "contents": [
+    {
+      "uri": "hostel://rules",
+      "mimeType": "text/markdown",
+      "text": "# Hostel rules (MOCK DATA for assignment use)\n\n1. Gate closes at 22:00 on weekdays and 23:00 on weekends.\n2. Visitors are allowed in the common room only, 10:00 to 18:00.\n3. Cooking appliances (heaters, induction plates) are not allowed in rooms.\n4. Quiet hours are 23:00 to 06:00.\n5. Report maintenance problems to the warden's desk.\n"
+    }
+  ]
+}
+(exit 0)

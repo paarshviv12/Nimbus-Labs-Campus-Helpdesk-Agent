@@ -1,0 +1,48 @@
+# 2026-11-13 UTC, 2.1.323 (Claude Code)
+
+$ claude plugin validate ./campus-helpdesk --strict
+Validating plugin manifest: <repo>/campus-helpdesk/.claude-plugin/plugin.json
+Plugin directory checks for <repo>/campus-helpdesk. The plugin directory is the ca
+‼ Found 1 plugin directory warning:
+  > .claude-plugin/plugin.json icon: No icon (ICON_MISSING). No icon found in the plugin. The validator looked for `icon` in plugin.json and for a file at .claude-plugin/icon.png or .svg, assets/icon.
+    Fix: Add a square PNG to the plugin folder at .claude-plugin/icon.png, or set `icon` in plugin.json to the path of a square PNG or JPEG in the plugin: 512 to 2048 px on each side, under 2 MB. SVG 
+These plugin directory checks do not change the result below.
+The directory also runs a safety scan and a policy review that this command does not.
+√ Validation passed
+(exit 0)
+
+$ claude plugin validate . --strict
+Validating marketplace manifest: <repo>/.claude-plugin/marketplace.json
+√ Validation passed
+(exit 0)
+
+$ claude plugin marketplace add ./
+Adding marketplace…√ Successfully added marketplace: nimbus-campus-marketplace (declared in user settings)
+(exit 0)
+
+$ claude plugin install campus-helpdesk@nimbus-campus-marketplace
+Installing plugin "campus-helpdesk@nimbus-campus-marketplace"...√ Successfully installed plugin: campus-helpdesk@nimbus-campus-marketplace (scope: user)
+(exit 0)
+
+$ claude plugin list
+Installed plugins:
+  > campus-helpdesk@nimbus-campus-marketplace
+    Version: 0.3.0
+    Read from: <repo>/campus-helpdesk
+    Scope: user
+    Status: √ enabled
+(exit 0)
+
+$ claude mcp list
+No MCP servers configured. Use `claude mcp add` to add a server.
+(exit 0)
+
+$ claude plugin uninstall campus-helpdesk@nimbus-campus-marketplace
+√ Successfully uninstalled plugin: campus-helpdesk (scope: user)
+√ Successfully removed marketplace: nimbus-campus-marketplace
+
+# Bundled server resolved from the plugin .mcp.json and started with a raw stdio client (tools/list check):
+$ (read campus-helpdesk/.mcp.json, replace ${CLAUDE_PLUGIN_ROOT}, spawn, initialize, tools/list)
+resolved command: python3 campus-helpdesk/mcp-server/server.py
+initialize -> {'name': 'campus-helpdesk', 'version': '1.0.0'} protocol 2025-11-25
+tools/list -> ['get_timetable', 'get_fee_status']

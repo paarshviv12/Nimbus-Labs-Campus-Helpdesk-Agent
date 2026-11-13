@@ -19,6 +19,7 @@ DATA = HERE / "data"
 
 mcp = MCPServer(
     "campus-helpdesk",
+    version="1.0.0",
     instructions="Read-only campus helpdesk. Answers come only from the mock data files.",
 )
 

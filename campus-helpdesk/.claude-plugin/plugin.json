@@ -1,7 +1,7 @@
 {
   "name": "campus-helpdesk",
-  "version": "0.2.1",
-  "description": "Campus helpdesk toolkit: timetable skill, /timetable command, a hook that blocks writes to protected/, and a placeholder MCP server entry.",
+  "version": "0.3.0",
+  "description": "Campus helpdesk toolkit: timetable skill, /timetable command, a hook that blocks writes to protected/, and an MCP server entry that runs the bundled mock-data server.",
   "author": { "name": "Paarshvi Vijoy" },
   "license": "MIT",
   "keywords": ["campus", "timetable", "assignment"]
