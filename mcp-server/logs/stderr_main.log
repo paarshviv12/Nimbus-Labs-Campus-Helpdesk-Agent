@@ -1,0 +1,2 @@
+Tool 'get_fee_status' failed: 'Error executing tool get_fee_status: No fee record for student_id S9999.'
+Tool 'delete_everything' failed: 'Unknown tool: delete_everything'

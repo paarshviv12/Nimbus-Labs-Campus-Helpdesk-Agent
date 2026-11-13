@@ -1,0 +1,21 @@
+batch,day,start_time,end_time,subject,room,faculty
+A1,Mon,09:00,10:00,Data Structures,R-201,Dr. Mehta
+A1,Mon,10:15,11:15,Mathematics,R-105,Prof. Iyer
+A1,Mon,11:30,12:30,Python Lab,L-3,Ms. Kulkarni
+A1,Tue,09:00,10:00,DBMS,R-202,Dr. Rao
+A1,Tue,10:15,11:15,Data Structures,R-201,Dr. Mehta
+A1,Wed,09:00,10:00,Mathematics,R-105,Prof. Iyer
+A1,Wed,14:00,16:00,Python Lab,L-3,Ms. Kulkarni
+A1,Fri,10:15,11:15,DBMS,R-202,Dr. Rao
+A2,Mon,09:00,10:00,Mathematics,R-106,Prof. Iyer
+A2,Mon,10:15,11:15,Data Structures,R-203,Dr. Mehta
+A2,Tue,11:30,12:30,DBMS,R-202,Dr. Rao
+B1,Mon,09:00,10:00,Operating Systems,R-301,Dr. Nair
+B1,Wed,10:15,11:15,DBMS,R-302,Dr. Rao
+B1,Wed,11:30,12:30,Computer Networks,R-301,Prof. Desai
+B1,Thu,09:00,10:00,Operating Systems,R-301,Dr. Nair
+B2,Mon,10:15,11:15,Computer Networks,R-303,Prof. Desai
+B2,Wed,09:00,10:00,Operating Systems,R-303,Dr. Nair
+B2,Fri,09:00,10:00,DBMS,R-304,Dr. Rao
+B2,Fri,10:15,12:15,Networks Lab,L-5,Prof. Desai
+B2,Fri,14:00,15:00,Mathematics,R-304,Prof. Iyer

@@ -1,0 +1,12 @@
+{
+  "name": "nimbus-campus-marketplace",
+  "owner": { "name": "Ashutosh Pawar" },
+  "description": "Local marketplace for the Nimbus Campus Helpdesk assignment (mock data only).",
+  "plugins": [
+    {
+      "name": "campus-helpdesk",
+      "source": "./campus-helpdesk",
+      "description": "Timetable skill, /timetable command, protected-folder write guard hook, and a placeholder MCP entry."
+    }
+  ]
+}
