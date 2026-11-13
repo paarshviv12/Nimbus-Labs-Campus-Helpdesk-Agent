@@ -1,6 +1,6 @@
 {
   "name": "nimbus-campus-marketplace",
-  "owner": { "name": "Ashutosh Pawar" },
+  "owner": { "name": "Paarshvi Vijoy" },
   "description": "Local marketplace for the Nimbus Campus Helpdesk assignment (mock data only).",
   "plugins": [
     {
