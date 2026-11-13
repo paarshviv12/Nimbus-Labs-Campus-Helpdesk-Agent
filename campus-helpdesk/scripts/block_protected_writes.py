@@ -3,7 +3,8 @@
 
 Reads the hook JSON from stdin. Exit 2 + message on stderr = block the tool call
 (documented PreToolUse behaviour). Exit 0 with no output = no decision (normal flow).
-Fails closed: if the input is unreadable, the call is blocked.
+Fails closed: if the input is unreadable, or has no file path to judge, the call is blocked
+(this hook is only attached to Write and Edit, which always carry a file path).
 """
 import json
 import os
@@ -20,8 +21,9 @@ def main() -> int:
         print(f"Blocked: hook could not parse its input ({exc}).", file=sys.stderr)
         return 2
 
-    if not path:
-        return 0  # not a file write we can judge
+    if not isinstance(path, str) or not path:
+        print("Blocked: hook found no file_path to check in the tool input.", file=sys.stderr)
+        return 2  # cannot judge the target -> fail closed
 
     base = event.get("cwd") or os.getcwd()
     resolved = os.path.realpath(os.path.join(base, path))  # collapses '..' and symlinks
