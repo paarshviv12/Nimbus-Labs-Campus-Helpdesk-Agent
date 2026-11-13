@@ -1,0 +1,228 @@
+### 1. Create one linked worktree per branch
+$ git worktree add -b feature/skill-tests ~/nimbus-worktrees/skill-tests
+Preparing worktree (new branch 'feature/skill-tests')
+HEAD is now at f7f1755 Initial commit: skill, plugin, MCP server (Parts B, C, D)
+
+$ git worktree add -b feature/mcp-server ~/nimbus-worktrees/mcp-server
+Preparing worktree (new branch 'feature/mcp-server')
+HEAD is now at f7f1755 Initial commit: skill, plugin, MCP server (Parts B, C, D)
+
+$ git worktree add -b bugfix/hook-path ~/nimbus-worktrees/hook-path
+Preparing worktree (new branch 'bugfix/hook-path')
+HEAD is now at f7f1755 Initial commit: skill, plugin, MCP server (Parts B, C, D)
+
+$ git worktree list
+~/nimbus-campus-helpdesk        f7f1755 [main]
+~/nimbus-worktrees/hook-path    f7f1755 [bugfix/hook-path]
+~/nimbus-worktrees/mcp-server   f7f1755 [feature/mcp-server]
+~/nimbus-worktrees/skill-tests  f7f1755 [feature/skill-tests]
+
+### Refusal: same branch in a second worktree
+$ git worktree add ~/nimbus-worktrees/dup feature/skill-tests
+Preparing worktree (checking out 'feature/skill-tests')
+fatal: 'feature/skill-tests' is already used by worktree at '~/nimbus-worktrees/skill-tests'
+
++ bugfix/hook-path
++ feature/mcp-server
++ feature/skill-tests
+* main
+### 2a. Change in worktree 1: feature/skill-tests
+...                                                                      [100%]
+3 passed in 0.11s
+$ git log --oneline -n 2
+2e00226 Add pytest tests for timetable-helper script
+f7f1755 Initial commit: skill, plugin, MCP server (Parts B, C, D)
+
+### 2b. Change in worktree 2: feature/mcp-server (also bumps plugin version to 0.2.0)
+$ git diff --stat
+ campus-helpdesk/.claude-plugin/plugin.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+$ git log --oneline -n 2
+c91c454 MCP server: pin SDK range, bump plugin to 0.2.0
+f7f1755 Initial commit: skill, plugin, MCP server (Parts B, C, D)
+
+### 2c. Change in worktree 3: bugfix/hook-path (case-insensitive match; also bumps version to 0.1.1)
+Before fix: does 'Protected/' (capital P) slip through the hook?
+exit=0 (0 = allowed = BUG on case-insensitive filesystems)
+$ git diff
+diff --git a/campus-helpdesk/.claude-plugin/plugin.json b/campus-helpdesk/.claude-plugin/plugin.json
+index 39b6443..2c83b82 100644
+--- a/campus-helpdesk/.claude-plugin/plugin.json
++++ b/campus-helpdesk/.claude-plugin/plugin.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "campus-helpdesk",
+-  "version": "0.1.0",
++  "version": "0.1.1",
+   "description": "Campus helpdesk toolkit: timetable skill, /timetable command, a hook that blocks writes to protected/, and a placeholder MCP server entry.",
+   "author": { "name": "Paarshvi Vijoy" },
+   "license": "MIT",
+diff --git a/campus-helpdesk/scripts/block_protected_writes.py b/campus-helpdesk/scripts/block_protected_writes.py
+index 41441b8..52a3e48 100755
+--- a/campus-helpdesk/scripts/block_protected_writes.py
++++ b/campus-helpdesk/scripts/block_protected_writes.py
+@@ -27,7 +27,7 @@ def main() -> int:
+     resolved = os.path.realpath(os.path.join(base, path))  # collapses '..' and symlinks
+     parts = resolved.split(os.sep)
+ 
+-    if PROTECTED_DIR_NAME in parts[:-1]:
++    if PROTECTED_DIR_NAME in [p.casefold() for p in parts[:-1]]:
+         print(
+             f"Blocked by campus-helpdesk hook: '{path}' is inside a protected folder "
+             f"({resolved}). Ask the user to make this change manually.",
+
+....                                                                     [100%]
+4 passed in 0.13s
+$ git log --oneline -n 2
+a1af336 Fix hook: match protected folder name case-insensitively; bump plugin to 0.1.1
+f7f1755 Initial commit: skill, plugin, MCP server (Parts B, C, D)
+
+### 3. Merge the other branches into bugfix/hook-path (this worktree)
+$ git merge --no-ff -m Merge feature/skill-tests -m Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01KNmVihcHHojPmW86AuJ4ob feature/skill-tests
+Merge made by the 'ort' strategy.
+ .../timetable-helper/tests/test_query_timetable.py    | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+ create mode 100644 campus-helpdesk/skills/timetable-helper/tests/test_query_timetable.py
+
+### 3b. Merge feature/mcp-server: both branches changed the plugin version line -> conflict
+$ git merge --no-ff -m Merge feature/mcp-server -m Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01KNmVihcHHojPmW86AuJ4ob feature/mcp-server
+Auto-merging campus-helpdesk/.claude-plugin/plugin.json
+CONFLICT (content): Merge conflict in campus-helpdesk/.claude-plugin/plugin.json
+Automatic merge failed; fix conflicts and then commit the result.
+
+$ git status --short
+UU campus-helpdesk/.claude-plugin/plugin.json
+A  mcp-server/requirements.txt
+
+$ cat campus-helpdesk/.claude-plugin/plugin.json | head -8   (conflict markers)
+{
+  "name": "campus-helpdesk",
+<<<<<<< HEAD
+  "version": "0.1.1",
+=======
+  "version": "0.2.0",
+>>>>>>> feature/mcp-server
+  "description": "Campus helpdesk toolkit: timetable skill, /timetable command, a hook that blocks writes to protected/, and a placeholder MCP server entry.",
+  "author": { "name": "Paarshvi Vijoy" },
+  "license": "MIT",
+  "keywords": ["campus", "timetable", "assignment"]
+}
+### 4. Resolve by hand: feature adds new functionality (minor bump) and the fix is a patch -> 0.2.1
+markers left: 0
+$ python3 -c import json;print(json.load(open('campus-helpdesk/.claude-plugin/plugin.json'))['version'])
+0.2.1
+
+### 4b. Verify before committing (human-review step): validate + tests
+$ claude plugin validate ./campus-helpdesk --strict
+Validating plugin manifest: ~/nimbus-worktrees/hook-path/campus-helpdesk/.claude-plugin/plugin.json
+
+Plugin directory checks for ~/nimbus-worktrees/hook-path/campus-helpdesk. The plugin directory is the catalog that plugins are submitted to; this is a subset of what it runs.
+
+‼ Found 1 plugin directory warning:
+
+  > .claude-plugin/plugin.json icon: No icon (ICON_MISSING). No icon found in the plugin. The validator looked for `icon` in plugin.json and for a file at .claude-plugin/icon.png or .svg, assets/icon.png or .svg, or a similar path.
+    Fix: Add a square PNG to the plugin folder at .claude-plugin/icon.png, or set `icon` in plugin.json to the path of a square PNG or JPEG in the plugin: 512 to 2048 px on each side, under 2 MB. SVG and WebP are not accepted. That file may become the listing icon only once: the first time the plugin is saved or submitted in the developer portal. Adding or changing it later does not change the icon.
+
+These plugin directory checks do not change the result below.
+
+The directory also runs a safety scan and a policy review that this command does not.
+
+√ Validation passed
+
+.......                                                                  [100%]
+7 passed in 0.20s
+$ git add campus-helpdesk/.claude-plugin/plugin.json
+
+$ git status --short
+M  campus-helpdesk/.claude-plugin/plugin.json
+A  mcp-server/requirements.txt
+
+### 5. History graph
+$ git log --graph --oneline --decorate --all
+*   43e77ff (HEAD -> bugfix/hook-path) Merge feature/mcp-server (resolve plugin version conflict as 0.2.1)
+|\  
+| * c91c454 (feature/mcp-server) MCP server: pin SDK range, bump plugin to 0.2.0
+* |   2872faa Merge feature/skill-tests
+|\ \  
+| * | 2e00226 (feature/skill-tests) Add pytest tests for timetable-helper script
+| |/  
+* / a1af336 Fix hook: match protected folder name case-insensitively; bump plugin to 0.1.1
+|/  
+* f7f1755 (main) Initial commit: skill, plugin, MCP server (Parts B, C, D)
+
+$ git worktree list
+~/nimbus-campus-helpdesk        f7f1755 [main]
+~/nimbus-worktrees/hook-path    43e77ff [bugfix/hook-path]
+~/nimbus-worktrees/mcp-server   c91c454 [feature/mcp-server]
+~/nimbus-worktrees/skill-tests  2e00226 [feature/skill-tests]
+
+### 6. What is shared / not shared
+$ cat .git
+gitdir: ~/nimbus-campus-helpdesk/.git/worktrees/hook-path
+
+$ git rev-parse --git-dir --git-common-dir
+~/nimbus-campus-helpdesk/.git/worktrees/hook-path
+~/nimbus-campus-helpdesk/.git
+
+$ ls <common-dir>/worktrees/hook-path   (per-worktree HEAD, index live here)
+COMMIT_EDITMSG
+HEAD
+ORIG_HEAD
+commondir
+gitdir
+index
+logs
+--- ignored files exist only in the worktree where they were created:
+$ ls -a hook-path | grep -E "^(.env|node_modules)$"
+.env
+node_modules
+$ ls -a mcp-server | grep -E "^(.env|node_modules)$"   (nothing printed = not there)
+--- same commits visible everywhere (shared object database / refs):
+hook-path sees feature/skill-tests tip: 2e00226
+### 7. Safe cleanup
+$ git branch --merged bugfix/hook-path
+* bugfix/hook-path
++ feature/mcp-server
++ feature/skill-tests
++ main
+
+touch an untracked file in mcp-server worktree, then try to remove it:
+$ git worktree remove ~/nimbus-worktrees/mcp-server
+fatal: '~/nimbus-worktrees/mcp-server' contains modified or untracked files, use --force to delete it
+
+$ git worktree remove ~/nimbus-worktrees/mcp-server
+
+$ git worktree remove ~/nimbus-worktrees/skill-tests
+
+--- stale worktree: directory deleted by hand
+$ git worktree add -b scratch/stale ~/nimbus-worktrees/tmp-stale
+Preparing worktree (new branch 'scratch/stale')
+HEAD is now at 43e77ff Merge feature/mcp-server (resolve plugin version conflict as 0.2.1)
+
+$ git worktree list
+~/nimbus-campus-helpdesk      f7f1755 [main]
+~/nimbus-worktrees/hook-path  43e77ff [bugfix/hook-path]
+~/nimbus-worktrees/tmp-stale  43e77ff [scratch/stale] prunable
+
+$ git worktree prune --dry-run --verbose
+Removing worktrees/tmp-stale: gitdir file points to non-existent location
+
+$ git worktree prune --verbose
+Removing worktrees/tmp-stale: gitdir file points to non-existent location
+
+$ git branch -d scratch/stale
+Deleted branch scratch/stale (was 43e77ff).
+
+$ git worktree list
+~/nimbus-campus-helpdesk      f7f1755 [main]
+~/nimbus-worktrees/hook-path  43e77ff [bugfix/hook-path]
+
+$ git branch
+* bugfix/hook-path
+  feature/mcp-server
+  feature/skill-tests
++ main
+

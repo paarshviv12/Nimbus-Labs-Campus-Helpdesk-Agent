@@ -1,0 +1,27 @@
+$ python scripts/query_timetable.py --batch A1 --day Mon
+batch,day,start_time,end_time,subject,room,faculty
+A1,Mon,09:00,10:00,Data Structures,R-201,Dr. Mehta
+A1,Mon,10:15,11:15,Mathematics,R-105,Prof. Iyer
+A1,Mon,11:30,12:30,Python Lab,L-3,Ms. Kulkarni
+(exit 0)
+
+$ python scripts/query_timetable.py --batch B1 --day Wed --subject "DBMS"
+batch,day,start_time,end_time,subject,room,faculty
+B1,Wed,10:15,11:15,DBMS,R-302,Dr. Rao
+(exit 0)
+
+$ python scripts/query_timetable.py --batch B2 --day Fri --subject "Quantum Computing"
+NOT FOUND: no rows for batch=B2, day=Fri, subject~'Quantum Computing'
+(exit 1)
+
+$ python scripts/query_timetable.py --batch Z9 --day Mon
+NOT FOUND: no rows for batch=Z9, day=Mon
+(exit 1)
+
+$ python scripts/query_timetable.py --batch B2 --day Fri
+batch,day,start_time,end_time,subject,room,faculty
+B2,Fri,09:00,10:00,DBMS,R-304,Dr. Rao
+B2,Fri,10:15,12:15,Networks Lab,L-5,Prof. Desai
+B2,Fri,14:00,15:00,Mathematics,R-304,Prof. Iyer
+(exit 0)
+

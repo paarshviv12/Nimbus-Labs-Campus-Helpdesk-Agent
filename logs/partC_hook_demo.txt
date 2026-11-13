@@ -1,0 +1,21 @@
+$ echo '{"cwd":"/w","tool_input":{"file_path":"/w/protected/grades.csv"}}' | python3 scripts/block_protected_writes.py
+Blocked by campus-helpdesk hook: '/w/protected/grades.csv' is inside a protected folder (/w/protected/grades.csv). Ask the user to make this change manually.
+(exit 2)
+
+$ echo '{"cwd":"/w","tool_input":{"file_path":"/w/notes/todo.md"}}' | python3 scripts/block_protected_writes.py
+(exit 0)
+
+$ echo '{"cwd":"/w","tool_input":{"file_path":"/w/notes/../protected/fees.csv"}}' | python3 scripts/block_protected_writes.py
+Blocked by campus-helpdesk hook: '/w/notes/../protected/fees.csv' is inside a protected folder (/w/protected/fees.csv). Ask the user to make this change manually.
+(exit 2)
+
+$ echo '{"cwd":"/w","tool_input":{"file_path":"/w/Protected/a.csv"}}' | python3 scripts/block_protected_writes.py
+Blocked by campus-helpdesk hook: '/w/Protected/a.csv' is inside a protected folder (/w/Protected/a.csv). Ask the user to make this change manually.
+(exit 2)
+
+$ echo '{"cwd":"/w","tool_input":{"file_path":"/w/protected.txt"}}' | python3 scripts/block_protected_writes.py
+(exit 0)
+
+$ echo 'garbage' | python3 scripts/block_protected_writes.py
+Blocked: hook could not parse its input (Expecting value: line 1 column 1 (char 0)).
+(exit 2)

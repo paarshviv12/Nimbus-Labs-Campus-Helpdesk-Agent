@@ -1,0 +1,55 @@
+# Real run, 2026-11-13 UTC, 2.1.323 (Claude Code)
+
+$ claude plugin validate ./campus-helpdesk --strict
+Validating plugin manifest: <repo>/campus-helpdesk/.claude-plugin/plugin.json
+
+Plugin directory checks for <repo>/campus-helpdesk. The plugin directory is the catalog that plugins are submitted to; this is a subset of what it runs.
+
+‼ Found 1 plugin directory warning:
+
+  > .claude-plugin/plugin.json icon: No icon (ICON_MISSING). No icon found in the plugin. The validator looked for `icon` in plugin.json and for a file at .claude-plugin/icon.png or .svg, assets/icon.png or .svg, or a similar path.
+    Fix: Add a square PNG to the plugin folder at .claude-plugin/icon.png, or set `icon` in plugin.json to the path of a square PNG or JPEG in the plugin: 512 to 2048 px on each side, under 2 MB. SVG and WebP are not accepted. That file may become the listing icon only once: the first time the plugin is saved or submitted in the developer portal. Adding or changing it later does not change the icon.
+
+These plugin directory checks do not change the result below.
+
+The directory also runs a safety scan and a policy review that this command does not.
+
+√ Validation passed
+(exit 0)
+
+$ claude plugin validate . --strict
+Validating marketplace manifest: <repo>/.claude-plugin/marketplace.json
+
+√ Validation passed
+(exit 0)
+
+$ claude plugin marketplace add ./
+Adding marketplace…√ Successfully added marketplace: nimbus-campus-marketplace (declared in user settings)
+(exit 0)
+
+$ claude plugin install campus-helpdesk@nimbus-campus-marketplace
+Installing plugin "campus-helpdesk@nimbus-campus-marketplace"...√ Successfully installed plugin: campus-helpdesk@nimbus-campus-marketplace (scope: user)
+(exit 0)
+
+$ claude plugin list
+Installed plugins:
+
+  > campus-helpdesk@nimbus-campus-marketplace
+    Version: 0.1.0
+    Read from: <repo>/campus-helpdesk
+    Scope: user
+    Status: √ enabled
+
+(exit 0)
+
+$ claude plugin uninstall campus-helpdesk@nimbus-campus-marketplace
+√ Successfully uninstalled plugin: campus-helpdesk (scope: user)
+(exit 0)
+
+$ claude plugin list
+No plugins installed. Use `claude plugin install` to install a plugin.
+(exit 0)
+
+$ claude plugin marketplace remove nimbus-campus-marketplace
+√ Successfully removed marketplace: nimbus-campus-marketplace
+(exit 0)
