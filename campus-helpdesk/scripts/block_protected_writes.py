@@ -27,7 +27,7 @@ def main() -> int:
     resolved = os.path.realpath(os.path.join(base, path))  # collapses '..' and symlinks
     parts = resolved.split(os.sep)
 
-    if PROTECTED_DIR_NAME in parts[:-1]:
+    if PROTECTED_DIR_NAME in [p.casefold() for p in parts[:-1]]:
         print(
             f"Blocked by campus-helpdesk hook: '{path}' is inside a protected folder "
             f"({resolved}). Ask the user to make this change manually.",
